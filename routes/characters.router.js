@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const data = require('./data')
+const data = require('../data')
 
 router.get('/', async(req, res) => {
   character_list = data.characters.map(char => {
