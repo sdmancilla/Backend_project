@@ -3,42 +3,64 @@ const router = express.Router()
 const data = require('./data')
 
 router.get('/', async(req, res) => {
-    res.json(data.models_3d)
+    res.json(data.characters_stats.filter(char => char.deleted != true))
 })
 
 router.get('/:id', async(req, res) => {
-    res.json(data.models_3d.find(model => model.id == req.params.id))
+  const {id} = req.params
+  const character = data.characters_stats.find(char => char.id == parseInt(id))
+  if(character !== undefined && character.deleted != true){
+    res.json(character)
+  }
 })
 
 router.post('/', async(req,res) => {
-    const {adress} = req.body
-    if (!adress) {
+    const {atr1, atr2, atr3} = req.body
+    const life = (!atr1) ? 0 : atr1*20
+    const power = !(atr1 || atr2) ? 0 : atr1 * 10 + atr2 * 25
+    const magic = !atr3 ? 0 : atr3 * 100
+    if (!(atr1 && atr2 && atr3)) {
         return res.status(404).json({error: {message: 'Not enough fields'}})
+    }else{
+        character = {
+            life,
+            power,
+            magic,
+            atr1,
+            atr2,
+            atr3,
+            id: data.characters_stats.length + 1
+          }
+          data.characters_stats.push(character)
+          res.status(200).json({message: 'Successfully created'})
     }
-    model = {
-        adress,
-        id: data.models_3d.length + 1
-    }
-    data.models_3d.push(model)
-    res.status(200).json({message: 'Successfully created'})
-    
   })
 
 router.put('/:id', async(req,res) => {
-   const {adress} = req.body
-   data.models_3d.forEach(element => {
+  const {atr1, atr2, atr3} = req.body
+   data.characters_stats.forEach(element => {
      if(element.id == req.params.id){
-       element.adress = (adress !== undefined) ? adress : element.adress 
-
+       element.life = !atr1 ? element.life : atr1*20
+       element.power = !(atr1 || atr2) ? element.power : atr1 * 10 + atr2 * 25
+       element.magic = !atr3 ? element.magic : atr3 * 100
+       element.atr1 = (atr1 !== undefined) ? atr1 : element.atr1
+       element.atr2 = (atr2 !== undefined) ? atr2 : element.atr2
+       element.atr3 = (atr3 !== undefined) ? atr3 : element.atr3
      }
    });
    res.status(200).json({message: 'Successfully updated'})
 })
 
 router.delete('/:id', async(req,res) => {
-    data = data.models_3d.filter(model => model.id != req.params.id)
-    res.status(200).json({message: 'Successfully deleted'})
-  })
+  const {id} = req.params
+  const character = data.characters_stats.find(el => el.id === parseInt(id))
+    if(character !== undefined){
+      character.deleted = true
+      res.status(200).json({message: 'Successfully deleted'})
+    }else{
+      return res.status(404).json({error: {message: 'user doesn\'t exists'}})
+    }
+})
 
 
 module.exports = router;

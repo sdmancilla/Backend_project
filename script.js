@@ -12,6 +12,9 @@ app.use('/characters', character)
 const model_3d = require('./models_3d.router')
 app.use('/models_3d', model_3d)
 
+const character_stats = require('./character_stats.router')
+app.use('/character_stats', character_stats)
+
 app.get('*', (req, res) => {
     res.status(404).json({error: "Not Found"})
 });
