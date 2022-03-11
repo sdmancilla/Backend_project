@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
     const { id } = req.params;
     const item = data.items.find(item => item.id === parseInt(id));
-    if (item !== undefined && item.deleted != true)
+    if (item && item.deleted != true)
         res.json({ data: item });
     else
         res.status(404).json({ error: { message: 'Item not found' } });
@@ -35,12 +35,12 @@ router.put('/:id', (req, res) => {
     const { id } = req.params;
     const { name, level, description, image, sell_price } = req.body;
     const item = data.items.find(item => item.id === parseInt(id));
-    if (item !== undefined && item.deleted != true) {
-        item.name = (name !== undefined) ? name : item.name;
-        item.level = (name !== undefined) ? level : item.level;
-        item.description = (name !== undefined) ? description : item.description;
-        item.image = (name !== undefined) ? image : item.image;
-        item.sell_price = (name !== undefined) ? sell_price : item.sell_price;
+    if (item && item.deleted != true) {
+        item.name = (name) ? name : item.name;
+        item.level = (level) ? level : item.level;
+        item.description = (description) ? description : item.description;
+        item.image = (image) ? image : item.image;
+        item.sell_price = (sell_price) ? sell_price : item.sell_price;
         res.json({ message: "Item updated succesfully" });
     } else {
         res.status(404).json({ error: { message: 'Item not found' } });
@@ -50,7 +50,7 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
     const { id } = req.params;
     const oldItem = data.items.find(item => item.id === parseInt(id));
-    if (oldItem !== undefined) {
+    if (oldItem) {
         oldItem.deleted = true;
         res.json({ message: "Item deleted succesfully" });
     } else {

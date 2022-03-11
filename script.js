@@ -9,6 +9,14 @@ app.use(express.json())
 const items = require('./items.route')
 app.use('/items', items)
 
+// Players
+const players = require('./players.route')
+app.use('/players', players)
+
+// Player Character
+const playerCharacters = require('./playerCharacters.route')
+app.use('/player-characters', playerCharacters)
+
 app.get('*', (req, res) => {
     res.status(404).json({error: "Not Found"})
 });
