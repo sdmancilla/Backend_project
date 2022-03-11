@@ -5,13 +5,17 @@ const app = express();
 app.use(cors())
 app.use(express.json())
 
-app.get('/', async (req, res) => {
-    res.send(req.query)
-});
+// Items
+const items = require('./items.route')
+app.use('/items', items)
 
-app.post('/', async (req, res) => {
-    res.json(req.body);
-});
+// Players
+const players = require('./players.route')
+app.use('/players', players)
+
+// Player Character
+const playerCharacters = require('./playerCharacters.route')
+app.use('/player-characters', playerCharacters)
 
 app.get('*', (req, res) => {
     res.status(404).json({error: "Not Found"})
