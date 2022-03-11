@@ -23,7 +23,7 @@ const data = {
             name: "wash the dishes",
             description: "have to wash the dishes",
             level_reward: 5,
-            revel_requirement: 4,
+            level_requirement: 4,
             quest_giver_character: "wanda",
         }
     ],

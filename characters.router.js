@@ -6,9 +6,11 @@ router.get('/', async(req, res) => {
   character_list = data.characters.map(char => {
     if(char.deleted != true){
       const stats = data.characters_stats.find(elem => elem.id === char.id)
+      const missions = data.missions.filter(elem => elem.level_requirement <= char.level)
       const character = {
         ...char,
-        stats
+        stats,
+        missions
       }
       return character
     }
