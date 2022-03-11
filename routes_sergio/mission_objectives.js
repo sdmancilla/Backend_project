@@ -41,8 +41,8 @@ router.put("/:id", async (req, res) => {
         item.name = (name) ? name: item.name;
         item.description = (description) ? description: item.description;
         item.count = (count) ? count: item.count;
-        item.mission = (mission) ? mission: item.mission;
-        res.status(200).json({message: "mission_objective changed"});
+        message = (mission) ? "mission_objective changed, but field 'mission' was not modified":"mission_objective changed";
+        res.status(200).json({message: message});
     }else{
         res.status(400).json({message: "must to join an id"});
     }
