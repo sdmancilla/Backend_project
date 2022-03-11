@@ -2,16 +2,15 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 
+
 app.use(cors())
 app.use(express.json())
 
-app.get('/', async (req, res) => {
-    res.send(req.query)
-});
+const character = require('./characters.router')
+app.use('/characters', character)
 
-app.post('/', async (req, res) => {
-    res.json(req.body);
-});
+const model_3d = require('./models_3d.router')
+app.use('/models_3d', model_3d)
 
 app.get('*', (req, res) => {
     res.status(404).json({error: "Not Found"})
