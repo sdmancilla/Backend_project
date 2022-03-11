@@ -27,14 +27,14 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-    const {name, description, level_reward, revel_requirement, quest_giver_character} = req.body;
-    if (name && description && level_reward && revel_requirement && quest_giver_character) {
+    const {name, description, level_reward, level_requirement, quest_giver_character} = req.body;
+    if (name && description && level_reward && level_requirement && quest_giver_character) {
         const item = {
             id: data.missions.length + 1,
             name,
             description,
             level_reward: parseInt(level_reward),
-            revel_requirement: parseInt(revel_requirement),
+            level_requirement: parseInt(level_requirement),
             quest_giver_character
         }
         data.missions.push(item)
@@ -46,13 +46,13 @@ router.post("/", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
     const {id} = req.params;
-    const {name, description, level_reward, revel_requirement, quest_giver_character} = req.body;
+    const {name, description, level_reward, level_requirement, quest_giver_character} = req.body;
     const item = data.missions.find(mission => mission.id === +id);
     if (id && item) {
         item.name = (name) ? name: item.name;
         item.description = (description) ? description: item.description;
         item.level_reward = (level_reward) ? level_reward: item.level_reward;
-        item.revel_requirement = (revel_requirement) ? revel_requirement: item.revel_requirement;
+        item.level_requirement = (level_requirement) ? level_requirement: item.level_requirement;
         item.quest_giver_character = (quest_giver_character) ? quest_giver_character: item.quest_giver_character;
         res.status(200).json({message: "mission changed"});
     }else{
