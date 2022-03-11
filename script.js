@@ -8,13 +8,17 @@ const mission_objectives = require('./routes_sergio/mission_objectives');
 app.use(cors())
 app.use(express.json())
 
-app.get('/', async (req, res) => {
-    res.send(req.query)
-});
+// Items
+const items = require('./items.route')
+app.use('/items', items)
 
-app.post('/', async (req, res) => {
-    res.json(req.body);
-});
+// Players
+const players = require('./players.route')
+app.use('/players', players)
+
+// Player Character
+const playerCharacters = require('./playerCharacters.route')
+app.use('/player-characters', playerCharacters)
 
 //missions
 app.use('/missions', missions);
