@@ -5,8 +5,19 @@ const missions = require('./routes_sergio/missions');
 const images_2d = require('./routes_sergio/images_2d');
 const mission_objectives = require('./routes_sergio/mission_objectives');
 
+
 app.use(cors())
 app.use(express.json())
+
+
+const character = require('./characters.router')
+app.use('/characters', character)
+
+const model_3d = require('./models_3d.router')
+app.use('/models_3d', model_3d)
+
+const character_stats = require('./character_stats.router')
+app.use('/character_stats', character_stats)
 
 // Items
 const items = require('./items.route')
@@ -26,6 +37,7 @@ app.use('/missions', missions);
 app.use('/images_2d', images_2d);
 //mission_objectives
 app.use('/mission_objectives', mission_objectives);
+
 
 app.get('*', (req, res) => {
     res.status(404).json({error: "Not Found"})
